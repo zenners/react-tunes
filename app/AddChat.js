@@ -30,12 +30,12 @@ var AddChat = React.createClass({
       },
       success: function() {
         console.log('Successful Post');
-      }.bind(this)
+      }
     })
   },
   handleSubmit: function(e){
     if(e.keyCode === 13){
-      this.addChat(this.state.chat);
+      this.addChat();
       this.setState({
         chat: ''
       })
