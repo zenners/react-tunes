@@ -7,6 +7,14 @@ var AddChat = React.createClass({
       chat: ''
     }
   },
+  propTypes: {
+    url: React.PropTypes.string.isRequired
+  },
+  getDefaultProps: function() {
+    return {
+      url: 'https://api.parse.com/1/classes/chat'
+    };
+  },
   addChat: function(){
     $.ajax({
       url: this.props.url,
@@ -18,11 +26,10 @@ var AddChat = React.createClass({
         request.setRequestHeader("Content-Type", 'application/json');
       },
       error: function() {
-        debugger;
         console.log('error on post');
       },
       success: function() {
-        console.log('Succes Post');
+        console.log('Successful Post');
       }.bind(this)
     })
   },

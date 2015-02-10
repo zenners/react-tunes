@@ -7,6 +7,14 @@ var ChatList = React.createClass({
       chats: []
     }
   },
+  propTypes: {
+    url: React.PropTypes.string.isRequired
+  },
+  getDefaultProps: function() {
+    return {
+      url: 'https://api.parse.com/1/classes/chat'
+    };
+  },
   getChats: function(){
     $.ajax({
       url: this.props.url,
