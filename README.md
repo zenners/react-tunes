@@ -23,7 +23,7 @@ The ```search``` state is going to be tied to the input box and it's eventually 
 This ```cb``` prop we're passing in is a callback that we'll invoke once we have the data from iTunes and it will then update the state of the ```App``` component.
 
 * Next, create a ```handleChange``` method which will update the ```search``` state whenever a user types in the input field we'll make in a bit.
-* Create a ```handleSelectChagne``` method that will update the ```entity``` state whenever a user changes the drop down menu which we'll make in a bit as well.
+* Create a ```handleSelectChange``` method that will update the ```entity``` state whenever a user changes the drop down menu which we'll make in a bit as well.
 
 Next what we're going to need to do is create a helper method that will return us a URL which we'll then use to make the Ajax request to iTunes.
 
@@ -41,7 +41,7 @@ Let's now shift focus to the ```App.js``` file. This component will be where be 
 * Set the initial state of this component to be a property of ```data``` whose value is an empty string. This will eventually be the data we get back from our ```SearchItunes``` component.
 * create an ```updateState``` method which takes in a ```info``` parameter and sets the ```data``` state to that info parameter. This is what we'll pass the ```SearchItunes``` component to be invoked as ```cb``` when the iTunes data is ready.
 
-Next head down to the ```render``` method. Take note of the ```griddleMeta``` array. It's full of objects which define certain columns in our Grid. "columnName" corresponds with a proprty that exists on the iTunes response object. "displayName" will be what the column title says. And customComponent is a way for us to specify what we'd like the rendered HTML of that certain component to look like. Notice in the example that for "Artwork" we're rendering an image and for "Online Link" we're rendering a link. We're able to do that because of this customComponent property.
+Next head down to the ```render``` method. Take note of the ```griddleMeta``` array. It's full of objects which define certain columns in our Grid. "columnName" corresponds with a property that exists on the iTunes response object. "displayName" will be what the column title says. And customComponent is a way for us to specify what we'd like the rendered HTML of that certain component to look like. Notice in the example that for "Artwork" we're rendering an image and for "Online Link" we're rendering a link. We're able to do that because of this customComponent property.
 
 * Create a ```ImageComponent``` at the top of this file which will render an image with the "src" being the data which will be passed in as a prop to the component.
 * Create a ```UrlComponent``` which will render a link pointing to the data property on the props object.
@@ -53,7 +53,7 @@ For Griddle, here are the instructions.
   * The Griddle component needs the following attributes.
     - results: The data it's going to put in the grid.
     - tableClassName: set the "table" to apply some extra CSS
-    - columnMetadat: This is going to be the object we built earlier and it's just some more config stuff for our component
+    - columnMetadata: This is going to be the object we built earlier and it's just some more config stuff for our component
     - columns: An array of the columns for our Grid. "trackName", "artistName", etc.
   
 That's it! If you finish early, you have a few options.
