@@ -2,6 +2,35 @@ ReactTunes
 ============
 
 ##Objectives
+The purpose of this project is to get you used to making AJAX requests in React, validating props, and using outside React components in your code.
 
+This project we're going to build an iTunes Web app using React. A basic example can be found here (TODO PUT URL HERE). 
 
-###Step 1:
+###Step 1: Familiarize yourself with Code
+Notice, like the last project, you're given a boilerplate of code to start with. There are two files in ```app```. ```App.js``` and ```SearchItunes```. The ```App``` component is going to be responsible for keeping track of the data from iTunes and displaying that data nicely to the screen. The ```SearchItunes``` component is going to be be a bootstrapped wrapped input and select field which will go and fetch some data from iTunes. *Because this project is very bootstrappy, feel free to roll your own CSS if you'd like. I use Bootstrap for these examples as a way to quickly demonstrate the principles behind React without too much CSS getting in the way*.
+
+One component we're going to use that is already built for us is a component called [Griddle](http://dynamictyped.github.io/Griddle/). Griddle is a simple grid component for use with React. It gives us a very convenient way to display some piece of data (in this case iTunes data) in a grid/table like manner. 
+
+* Run ```npm install``` in your terminal to install all of the dependencies that are located in the package.json, Griddler is one of these dependencies. 
+
+###Step 2: Search iTunes Component
+* Head over to your SearchItunes.js file and set the initial state of your component to be a property of ```search``` whose value is an empty string and also another property of ```entity``` whose value is ```musicTrack```. 
+
+The ```search``` state is going to be tied to the input box and it's eventually going to get put on the URL of the request we make to iTunes. The ```entity``` state is going to be tied to our Select field and will be the type of iTunes data the user wants to fetch (Music or Movies) and will also get tacked on to our URL of the request we make to iTunes.
+
+* Validate that your component is receiving a ```cb``` prop and that it's a function.
+
+This ```cb``` prop we're passing in is a callback that we'll invoke once we have the data from iTunes and it will then update the state of the ```App``` component.
+
+* Next, create a ```handleChange``` method which will update the ```search``` state whenever a user types in the input field we'll make in a bit.
+* Create a ```handleSelectChagne``` method that will update the ```entity``` state whenever a user changes the drop down menu which we'll make in a bit as well.
+
+Next what we're going to need to do is create a helper method that will return us a URL which we'll then use to make the Ajax request to iTunes.
+
+* Create a formatURL method which will return a URL that eventually looks like this, *https://itunes.apple.com/search?term=shakira&entity=musicTrack* replacing "shakira" with the ```search``` state and replacing ```musicTrack``` with the entity state.
+
+The last method we need to make is our handleSubmit method. This method will be tied to a button in our render method and will make the ```JSONP``` ajax request to the iTunes API to fetch some data. *If you're not familar with JSONP, here's a great Stack Overflow post on the subject. [JSONP Explained](http://stackoverflow.com/questions/2067472/what-is-jsonp-all-about)
+
+* Make a method called ```handleSubmit``` which will get the formatted URL from the ```formatURL``` method then it will make a ```JSONP``` ajax request to the specified URL. On success, invoke the ```cb``` method on the ```props``` object passing it the ```results``` array you got from the iTunes response object. 
+
+* Last step in this file is to finish the render method. Because I didn't want you to have to play with Bootstrap for the next 2 hours, I've left in the template that I had. *By no means am I a bootstrap master, so feel free to change this to whatever you'd like*.
