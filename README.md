@@ -47,3 +47,15 @@ Next head down to the ```render``` method. Take note of the ```griddleMeta``` ar
 * Create a ```UrlComponent``` which will render a link pointing to the data property on the props object.
 For more guidance on customComponent, check out the Griddle docs [HERE](http://dynamictyped.github.io/Griddle/customization.html#customColumns)
 
+Last step is finishing the render method. Check out the instructions inside the file itself. 
+
+For Griddle, here are the instructions. 
+  * The Griddle component needs the following attributes.
+    - results: The data it's going to put in the grid.
+    - tableClassName: set the "table" to apply some extra CSS
+    - columnMetadat: This is going to be the object we built earlier and it's just some more config stuff for our component
+    - columns: An array of the columns for our Grid. "trackName", "artistName", etc.
+  
+That's it! If you finish early, you have a few options.
+  - If you've never used Firebase, go and check it out. We'll cover it tomorrow morning but it's good to get a head start on it. [Firebase](https://www.firebase.com/)
+  - If you've used Firebase and you're feeling good with where you're at, check out [React Router](https://github.com/rackt/react-router) the most common way to do routing in React which we'll also cover tomorrow. 
