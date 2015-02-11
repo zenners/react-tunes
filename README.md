@@ -34,3 +34,16 @@ The last method we need to make is our handleSubmit method. This method will be 
 * Make a method called ```handleSubmit``` which will get the formatted URL from the ```formatURL``` method then it will make a ```JSONP``` ajax request to the specified URL. On success, invoke the ```cb``` method on the ```props``` object passing it the ```results``` array you got from the iTunes response object. 
 
 * Last step in this file is to finish the render method. Because I didn't want you to have to play with Bootstrap for the next 2 hours, I've left in the template that I had. *By no means am I a bootstrap master, so feel free to change this to whatever you'd like*.
+
+####Step 3: App Component
+Let's now shift focus to the ```App.js``` file. This component will be where be our main wrapper for our ```SearchItunes``` component but it will also be where our ```Griddle``` grid gets rendered. 
+
+* Set the initial state of this component to be a property of ```data``` whose value is an empty string. This will eventually be the data we get back from our ```SearchItunes``` component.
+* create an ```updateState``` method which takes in a ```info``` parameter and sets the ```data``` state to that info parameter. This is what we'll pass the ```SearchItunes``` component to be invoked as ```cb``` when the iTunes data is ready.
+
+Next head down to the ```render``` method. Take note of the ```griddleMeta``` array. It's full of objects which define certain columns in our Grid. "columnName" corresponds with a proprty that exists on the iTunes response object. "displayName" will be what the column title says. And customComponent is a way for us to specify what we'd like the rendered HTML of that certain component to look like. Notice in the example that for "Artwork" we're rendering an image and for "Online Link" we're rendering a link. We're able to do that because of this customComponent property.
+
+* Create a ```ImageComponent``` at the top of this file which will render an image with the "src" being the data which will be passed in as a prop to the component.
+* Create a ```UrlComponent``` which will render a link pointing to the data property on the props object.
+For more guidance on customComponent, check out the Griddle docs [HERE](http://dynamictyped.github.io/Griddle/customization.html#customColumns)
+
