@@ -4,7 +4,7 @@ ReactTunes
 ##Objectives
 The purpose of this project is to get you used to making AJAX requests in React, validating props, and using outside React components in your code.
 
-This project we're going to build an iTunes Web app using React. A basic example can be found here (TODO PUT URL HERE). 
+This project we're going to build an iTunes Web app using React. A basic example can be found [HERE](http://reactweek.com/projects/reactTunes). 
 
 ###Step 1: Familiarize yourself with Code
 Notice, like the last project, you're given a boilerplate of code to start with. There are two files in ```app```. ```App.js``` and ```SearchItunes```. The ```App``` component is going to be responsible for keeping track of the data from iTunes and displaying that data nicely to the screen. The ```SearchItunes``` component is going to be be a bootstrapped wrapped input and select field which will go and fetch some data from iTunes. *Because this project is very bootstrappy, feel free to roll your own CSS if you'd like. I use Bootstrap for these examples as a way to quickly demonstrate the principles behind React without too much CSS getting in the way*.
