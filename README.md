@@ -6,6 +6,12 @@ The purpose of this project is to get you used to making AJAX requests in React,
 
 This project we're going to build an iTunes Web app using React. A basic example can be found [HERE](http://reactweek.com/projects/reactTunes). 
 
+Here's an image of the project. 
+![ReactTunes](http://tylermcginnis.com/ReactWeek/react-tunes.png)
+
+And here's one with the component layers highlighted.
+![ReactTunes Highlighted](http://tylermcginnis.com/ReactWeek/react-tunes-components.png)
+
 ###Step 1: Familiarize yourself with Code
 Notice, like the last project, you're given a boilerplate of code to start with. There are two files in ```app```. ```App.js``` and ```SearchItunes```. The ```App``` component is going to be responsible for keeping track of the data from iTunes and displaying that data nicely to the screen. The ```SearchItunes``` component is going to be be a bootstrapped wrapped input and select field which will go and fetch some data from iTunes. *Because this project is very bootstrappy, feel free to roll your own CSS if you'd like. I use Bootstrap for these examples as a way to quickly demonstrate the principles behind React without too much CSS getting in the way*.
 
