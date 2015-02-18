@@ -2,6 +2,7 @@ var React = require('react');
 var SearchItunes = require('./SearchItunes');
 var Griddle = require('griddle-react');
 
+React.createClass({
   render: function(){
     var griddleMeta = [
       {columnName: 'trackName',displayName: 'Name'},
