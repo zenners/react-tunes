@@ -28,18 +28,60 @@ The ```search``` state is going to be tied to the input box and it's eventually 
 
 This ```cb``` prop we're passing in is a callback that we'll invoke once we have the data from iTunes and it will then update the state of the ```App``` component.
 
-* Next, create a ```handleChange``` method which will update the ```search``` state whenever a user types in the input field we'll make in a bit.
-* Create a ```handleSelectChange``` method that will update the ```entity``` state whenever a user changes the drop down menu which we'll make in a bit as well.
+* Next create an input field whose value will be the ```search``` state.
+* Then create a ```handleChange``` method which will update the ```search``` state whenever a user types in the input field you just made.
+  * Input Field
+```html
+<input className="form-control" type="text" value={this.state.search} onChange={this.handleChange}/>
+```
+  * handleChange method
+```javascript
+handleChange: function(e){
+  this.setState({
+   search: e.target.value
+  })
+}
+```
+* Now make your select element. It works the same as a input field so you can put on an ```onChange``` property. Then inside your select add two options with the values of ```musicTrack``` and ```movie```.
+* Create a ```handleSelectChange``` method that will now be linked to the ```onChange``` property on the select element in your render. Have the ```handleSelectChange``` method update the ```entity``` state with the value from your select.
+  * Select box
+```html
+<select className="form-control" onChange={this.handleSelectChange}>
+  <option value="musicTrack">Music</option>
+  <option value="movie">Movies</option>
+ </select>
+```
+  * Handle change method
+```javascript
+handleSelectChange: function(e){
+  this.setState({
+   entity: e.target.value
+  })
+ },
+```
 
-Next what we're going to need to do is create a helper method that will return us a URL which we'll then use to make the Ajax request to iTunes.
+* Next what we're going to need to do is create a helper method that will return us a URL which we'll then use to make the Ajax request to iTunes.
 
 * Create a formatURL method which will return a URL that eventually looks like this, *https://itunes.apple.com/search?term=shakira&entity=musicTrack* replacing "shakira" with the ```search``` state and replacing ```musicTrack``` with the entity state.
 
 The last method we need to make is our handleSubmit method. This method will be tied to a button in our render method and will make the ```JSONP``` ajax request to the iTunes API to fetch some data. *If you're not familar with JSONP, here's a great Stack Overflow post on the subject. [JSONP Explained](http://stackoverflow.com/questions/2067472/what-is-jsonp-all-about)
 
 * Make a method called ```handleSubmit``` which will get the formatted URL from the ```formatURL``` method then it will make a ```JSONP``` ajax request to the specified URL. On success, invoke the ```cb``` method on the ```props``` object passing it the ```results``` array you got from the iTunes response object. 
-
-* Last step in this file is to finish the render method. Because I didn't want you to have to play with Bootstrap for the next 2 hours, I've left in the template that I had. *By no means am I a bootstrap master, so feel free to change this to whatever you'd like*.
+```javascript
+handleSubmit: function(){
+  var url = this.formatUrl();
+   $.ajax({
+    url: url,
+    dataType: 'JSONP',
+    error: function(error){
+     console.log("Error:", error)
+    },
+    success: function(data){
+     this.props.cb(data.results)
+    }.bind(this)
+  })
+}
+```
 
 ####Step 3: App Component
 Let's now shift focus to the ```App.js``` file. This component will be where be our main wrapper for our ```SearchItunes``` component but it will also be where our ```Griddle``` grid gets rendered. 
