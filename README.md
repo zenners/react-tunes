@@ -131,7 +131,8 @@ For Griddle, here are the instructions.
     results={this.state.data}
     tableClassName="table"
     columnMetadata={griddleMeta}
-    columns={["trackName", "artistName", "primaryGenreName", "artworkUrl100", "trackPrice", "kind", "trackViewUrl"]} />
+    columns={["trackName", "artistName", "primaryGenreName", "artworkUrl100", "trackPrice", "kind", "trackViewUrl"]}
+  />
   ```
   
 That's it! If you finish early, you have a few options.
