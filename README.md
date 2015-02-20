@@ -28,39 +28,112 @@ The ```search``` state is going to be tied to the input box and it's eventually 
 
 This ```cb``` prop we're passing in is a callback that we'll invoke once we have the data from iTunes and it will then update the state of the ```App``` component.
 
-* Next, create a ```handleChange``` method which will update the ```search``` state whenever a user types in the input field we'll make in a bit.
-* Create a ```handleSelectChange``` method that will update the ```entity``` state whenever a user changes the drop down menu which we'll make in a bit as well.
+* Next create an input field whose value will be the ```search``` state.
+* Then create a ```handleChange``` method which will update the ```search``` state whenever a user types in the input field you just made.
 
-Next what we're going to need to do is create a helper method that will return us a URL which we'll then use to make the Ajax request to iTunes.
+Input Field
+```html
+<input className="form-control" type="text" value={this.state.search} onChange={this.handleChange}/>
+```
+
+handleChange method
+```javascript
+handleChange: function(e){
+  this.setState({
+    search: e.target.value
+  })
+}
+```
+* Now make your select element. It works the same as a input field so you can put on an ```onChange``` property. Then inside your select add two options with the values of ```musicTrack``` and ```movie```.
+* Create a ```handleSelectChange``` method that will now be linked to the ```onChange``` property on the select element in your render. Have the ```handleSelectChange``` method update the ```entity``` state with the value from your select.
+
+Select box
+```html
+ <select className="form-control" onChange={this.handleSelectChange}>
+   <option value="musicTrack">Music</option>
+   <option value="movie">Movies</option>
+ </select>
+```
+
+Handle change method
+```javascript
+handleSelectChange: function(e){
+  this.setState({
+    entity: e.target.value
+  })
+},
+```
+
+* Next what we're going to need to do is create a helper method that will return us a URL which we'll then use to make the Ajax request to iTunes.
 
 * Create a formatURL method which will return a URL that eventually looks like this, *https://itunes.apple.com/search?term=shakira&entity=musicTrack* replacing "shakira" with the ```search``` state and replacing ```musicTrack``` with the entity state.
 
 The last method we need to make is our handleSubmit method. This method will be tied to a button in our render method and will make the ```JSONP``` ajax request to the iTunes API to fetch some data. *If you're not familar with JSONP, here's a great Stack Overflow post on the subject. [JSONP Explained](http://stackoverflow.com/questions/2067472/what-is-jsonp-all-about)
 
 * Make a method called ```handleSubmit``` which will get the formatted URL from the ```formatURL``` method then it will make a ```JSONP``` ajax request to the specified URL. On success, invoke the ```cb``` method on the ```props``` object passing it the ```results``` array you got from the iTunes response object. 
-
-* Last step in this file is to finish the render method. Because I didn't want you to have to play with Bootstrap for the next 2 hours, I've left in the template that I had. *By no means am I a bootstrap master, so feel free to change this to whatever you'd like*.
+```javascript
+handleSubmit: function(){
+  var url = this.formatUrl();
+    $.ajax({
+      url: url,
+      dataType: 'JSONP',
+      error: function(error){
+        console.log("Error:", error)
+      },
+      success: function(data){
+      this.props.cb(data.results)
+    }.bind(this)
+  })
+}
+```
 
 ####Step 3: App Component
 Let's now shift focus to the ```App.js``` file. This component will be where be our main wrapper for our ```SearchItunes``` component but it will also be where our ```Griddle``` grid gets rendered. 
 
 * Set the initial state of this component to be a property of ```data``` whose value is an empty string. This will eventually be the data we get back from our ```SearchItunes``` component.
-* create an ```updateState``` method which takes in a ```info``` parameter and sets the ```data``` state to that info parameter. This is what we'll pass the ```SearchItunes``` component to be invoked as ```cb``` when the iTunes data is ready.
+* Create an ```updateState``` method which takes in an ```info``` parameter and sets the ```data``` state to that ```info``` parameter. This is what we'll pass the ```SearchItunes``` component as its ```cb``` prop. It will be invoked when the iTunes data is ready in the ```SearchItunes``` component.
 
 Next head down to the ```render``` method. Take note of the ```griddleMeta``` array. It's full of objects which define certain columns in our Grid. "columnName" corresponds with a property that exists on the iTunes response object. "displayName" will be what the column title says. And customComponent is a way for us to specify what we'd like the rendered HTML of that certain component to look like. Notice in the example that for "Artwork" we're rendering an image and for "Online Link" we're rendering a link. We're able to do that because of this customComponent property.
 
-* Create a ```ImageComponent``` at the top of this file which will render an image with the "src" being the data which will be passed in as a prop to the component.
-* Create a ```UrlComponent``` which will render a link pointing to the data property on the props object.
-For more guidance on customComponent, check out the Griddle docs [HERE](http://dynamictyped.github.io/Griddle/customization.html#customColumns)
+* Create an ```ImageComponent``` at the top of this file which will render an image with the "src" being the data prop which will be passed to the component.
+* Create an ```UrlComponent```, also at the to of this file, which will render an anchor(link) tag whose href points to the data property on the props object and that displays ```this.props.rowData.trackName```
+They'll look something like this
+```javascript
+var ImageComponent = React.createClass({
+    render: function(){
+        return (
+          <img src={this.props.data} />
+        )
+    }
+});
+
+var UrlComponent = React.createClass({
+    render: function(){
+        return (
+          <a href={this.props.data}>{this.props.rowData.trackName}></a>
+        )
+    }
+});
+```
+For more guidance on the customComponent part of our Griddle component, check out the Griddle docs [HERE](http://dynamictyped.github.io/Griddle/customization.html#customColumns)
 
 Last step is finishing the render method. Check out the instructions inside the file itself. 
 
 For Griddle, here are the instructions. 
   * The Griddle component needs the following attributes.
     - results: The data it's going to put in the grid.
-    - tableClassName: set the "table" to apply some extra CSS
-    - columnMetadata: This is going to be the object we built earlier and it's just some more config stuff for our component
+    - tableClassName: give this the class of "table" to apply some extra CSS.
+    - columnMetadata: This is going to be the array of objects we built earlier inside the render and it's just some more config stuff for our component
     - columns: An array of the columns for our Grid. "trackName", "artistName", etc.
+  You'll end up with something like this.
+  ```html
+  <Griddle
+    results={this.state.data}
+    tableClassName="table"
+    columnMetadata={griddleMeta}
+    columns={["trackName", "artistName", "primaryGenreName", "artworkUrl100", "trackPrice", "kind", "trackViewUrl"]}
+  />
+  ```
   
 That's it! If you finish early, you have a few options.
   - If you've never used Firebase, go and check it out. We'll cover it tomorrow morning but it's good to get a head start on it. [Firebase](https://www.firebase.com/)
