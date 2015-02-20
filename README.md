@@ -74,14 +74,14 @@ The last method we need to make is our handleSubmit method. This method will be 
 ```javascript
 handleSubmit: function(){
   var url = this.formatUrl();
-   $.ajax({
-    url: url,
-    dataType: 'JSONP',
-    error: function(error){
-     console.log("Error:", error)
-    },
-    success: function(data){
-     this.props.cb(data.results)
+    $.ajax({
+      url: url,
+      dataType: 'JSONP',
+      error: function(error){
+        console.log("Error:", error)
+      },
+      success: function(data){
+      this.props.cb(data.results)
     }.bind(this)
   })
 }
