@@ -95,18 +95,44 @@ Let's now shift focus to the ```App.js``` file. This component will be where be 
 
 Next head down to the ```render``` method. Take note of the ```griddleMeta``` array. It's full of objects which define certain columns in our Grid. "columnName" corresponds with a property that exists on the iTunes response object. "displayName" will be what the column title says. And customComponent is a way for us to specify what we'd like the rendered HTML of that certain component to look like. Notice in the example that for "Artwork" we're rendering an image and for "Online Link" we're rendering a link. We're able to do that because of this customComponent property.
 
-* Create an ```ImageComponent``` at the top of this file which will render an image with the "src" being the data which will be passed in as a prop to the component.
-* Create an ```UrlComponent``` which will render a link pointing to the data property on the props object.
-For more guidance on customComponent, check out the Griddle docs [HERE](http://dynamictyped.github.io/Griddle/customization.html#customColumns)
+* Create an ```ImageComponent``` at the top of this file which will render an image with the "src" being the data prop which will be passed to the component.
+* Create an ```UrlComponent```, also at the to of this file, which will render an anchor(link) tag whose href points to the data property on the props object and that displays ```this.props.rowData.trackName```
+They'll look something like this
+```javascript
+var ImageComponent = React.createClass({
+    render: function(){
+        return (
+            <img src={this.props.data} />
+        )
+    }
+});
+
+var UrlComponent = React.createClass({
+    render: function(){
+        return (
+            <a href={this.props.data}>{this.props.rowData.trackName}></a>
+        )
+    }
+});
+```
+For more guidance on the customComponent part of our Griddle component, check out the Griddle docs [HERE](http://dynamictyped.github.io/Griddle/customization.html#customColumns)
 
 Last step is finishing the render method. Check out the instructions inside the file itself. 
 
 For Griddle, here are the instructions. 
   * The Griddle component needs the following attributes.
     - results: The data it's going to put in the grid.
-    - tableClassName: set the "table" to apply some extra CSS
-    - columnMetadata: This is going to be the object we built earlier and it's just some more config stuff for our component
+    - tableClassName: give this the class of "table" to apply some extra CSS.
+    - columnMetadata: This is going to be the array of objects we built earlier inside the render and it's just some more config stuff for our component
     - columns: An array of the columns for our Grid. "trackName", "artistName", etc.
+  You'll end up with something like this.
+  ```html
+  <Griddle
+    results={this.state.data}
+    tableClassName="table"
+    columnMetadata={griddleMeta}
+    columns={["trackName", "artistName", "primaryGenreName", "artworkUrl100", "trackPrice", "kind", "trackViewUrl"]} />
+  ```
   
 That's it! If you finish early, you have a few options.
   - If you've never used Firebase, go and check it out. We'll cover it tomorrow morning but it's good to get a head start on it. [Firebase](https://www.firebase.com/)
