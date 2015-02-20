@@ -40,7 +40,7 @@ handleChange method
 ```javascript
 handleChange: function(e){
   this.setState({
-   search: e.target.value
+    search: e.target.value
   })
 }
 ```
@@ -59,9 +59,9 @@ Handle change method
 ```javascript
 handleSelectChange: function(e){
   this.setState({
-   entity: e.target.value
+    entity: e.target.value
   })
- },
+},
 ```
 
 * Next what we're going to need to do is create a helper method that will return us a URL which we'll then use to make the Ajax request to iTunes.
@@ -102,7 +102,7 @@ They'll look something like this
 var ImageComponent = React.createClass({
     render: function(){
         return (
-            <img src={this.props.data} />
+          <img src={this.props.data} />
         )
     }
 });
@@ -110,7 +110,7 @@ var ImageComponent = React.createClass({
 var UrlComponent = React.createClass({
     render: function(){
         return (
-            <a href={this.props.data}>{this.props.rowData.trackName}></a>
+          <a href={this.props.data}>{this.props.rowData.trackName}></a>
         )
     }
 });
