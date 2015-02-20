@@ -91,12 +91,12 @@ handleSubmit: function(){
 Let's now shift focus to the ```App.js``` file. This component will be where be our main wrapper for our ```SearchItunes``` component but it will also be where our ```Griddle``` grid gets rendered. 
 
 * Set the initial state of this component to be a property of ```data``` whose value is an empty string. This will eventually be the data we get back from our ```SearchItunes``` component.
-* create an ```updateState``` method which takes in a ```info``` parameter and sets the ```data``` state to that info parameter. This is what we'll pass the ```SearchItunes``` component to be invoked as ```cb``` when the iTunes data is ready.
+* Create an ```updateState``` method which takes in an ```info``` parameter and sets the ```data``` state to that ```info``` parameter. This is what we'll pass the ```SearchItunes``` component as its ```cb``` prop. It will be invoked when the iTunes data is ready in the ```SearchItunes``` component.
 
 Next head down to the ```render``` method. Take note of the ```griddleMeta``` array. It's full of objects which define certain columns in our Grid. "columnName" corresponds with a property that exists on the iTunes response object. "displayName" will be what the column title says. And customComponent is a way for us to specify what we'd like the rendered HTML of that certain component to look like. Notice in the example that for "Artwork" we're rendering an image and for "Online Link" we're rendering a link. We're able to do that because of this customComponent property.
 
-* Create a ```ImageComponent``` at the top of this file which will render an image with the "src" being the data which will be passed in as a prop to the component.
-* Create a ```UrlComponent``` which will render a link pointing to the data property on the props object.
+* Create an ```ImageComponent``` at the top of this file which will render an image with the "src" being the data which will be passed in as a prop to the component.
+* Create an ```UrlComponent``` which will render a link pointing to the data property on the props object.
 For more guidance on customComponent, check out the Griddle docs [HERE](http://dynamictyped.github.io/Griddle/customization.html#customColumns)
 
 Last step is finishing the render method. Check out the instructions inside the file itself. 
