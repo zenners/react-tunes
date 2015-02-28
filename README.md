@@ -28,24 +28,16 @@ The ```search``` state is going to be tied to the input box and it's eventually 
 
 This ```cb``` prop we're passing in is a callback that we'll invoke once we have the data from iTunes and it will then update the state of the ```App``` component.
 
-* Next create an input field whose value will be the ```search``` state.
-* Then create a ```handleChange``` method which will update the ```search``` state whenever a user types in the input field you just made.
+* Next create an input field with a ref of ```searchInput```.
 
 Input Field
 ```html
-<input className="form-control" type="text" value={this.state.search} onChange={this.handleChange}/>
+<input className="form-control" type="text" ref='searchInput' />
 ```
 
-handleChange method
-```javascript
-handleChange: function(e){
-  this.setState({
-    search: e.target.value
-  })
-}
-```
-* Now make your select element. It works the same as a input field so you can put on an ```onChange``` property. Then inside your select add two options with the values of ```musicTrack``` and ```movie```.
+* Now make your select element. Then inside your select add two options with the values of ```musicTrack``` and ```movie```.
 * Create a ```handleSelectChange``` method that will now be linked to the ```onChange``` property on the select element in your render. Have the ```handleSelectChange``` method update the ```entity``` state with the value from your select.
+
 
 Select box
 ```html
