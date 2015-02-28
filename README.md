@@ -20,9 +20,9 @@ One component we're going to use that is already built for us is a component cal
 * Run ```npm install``` in your terminal to install all of the dependencies that are located in the package.json, Griddler is one of these dependencies. 
 
 ###Step 2: Search iTunes Component
-* Head over to your SearchItunes.js file and set the initial state of your component to be a property of ```search``` whose value is an empty string and also another property of ```entity``` whose value is ```musicTrack```. 
+* Head over to your SearchItunes.js file and set the initial state of your component to be a property of ```entity``` whose value is ```musicTrack```. 
 
-The ```search``` state is going to be tied to the input box and it's eventually going to get put on the URL of the request we make to iTunes. The ```entity``` state is going to be tied to our Select field and will be the type of iTunes data the user wants to fetch (Music or Movies) and will also get tacked on to our URL of the request we make to iTunes.
+The ```entity``` state is going to be tied to our Select field and will be the type of iTunes data the user wants to fetch (Music or Movies) and will also get tacked on to our URL of the request we make to iTunes.
 
 * Validate that your component is receiving a ```cb``` prop and that it's a function.
 
