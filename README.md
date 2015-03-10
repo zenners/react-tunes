@@ -26,49 +26,19 @@ This component won't need an initial state. We'll be using the refs object avail
 
 This ```cb``` prop we're passing in is a callback that we'll invoke once we have the data from iTunes and it will then update the state of the ```App``` component.
 
-* Next create an input field with a ref of ```searchInput```.
-
-Input Field
-```html
-<input className="form-control" type="text" ref='searchInput' />
-```
+* Next create an input field with a ref of ```searchInput``` to give us access to what is typed into our input field.
 
 * Now make your select element. Then inside your select add two options with the values of ```musicTrack``` and ```movie```.
+
 * Add a ref onto your select element as well to give us access to what option has been selected. Call it ```selectInput```.
 
-
-Select box
-```html
- <select className="form-control" ref="selectInput">
-   <option value="musicTrack">Music</option>
-   <option value="movie">Movies</option>
- </select>
-```
-
-* Next what we're going to need to do is create a helper method that will return us a URL which we'll then use to make the Ajax request to iTunes.
+* Next what we're going to need to do is create a helper method that will return us a URL, which we'll then use to make the Ajax request to iTunes.
 
 * Create a formatURL method which will return a URL that eventually looks like this, *https://itunes.apple.com/search?term=shakira&entity=musicTrack* replacing "shakira" with the ```searchInput``` ref and replacing "musicTrack" with the ```selectInput``` ref.
 
 The last method we need to make is our handleSubmit method. This method will be tied to a button in our render method and will make the ```JSONP``` ajax request to the iTunes API to fetch some data. *If you're not familar with JSONP, here's a great Stack Overflow post on the subject. [JSONP Explained](http://stackoverflow.com/questions/2067472/what-is-jsonp-all-about)
 
-* Make a method called ```handleSubmit``` which will get the formatted URL from the ```formatURL``` method then it will make a ```JSONP``` ajax request to the specified URL. On success, invoke the ```cb``` method on the ```props``` object passing it the ```results``` array you got from the iTunes response object. Then add in a reset for our ```searchInput``` ref.
-```javascript
-handleSubmit: function(){
-  var url = this.formatUrl();
-    $.ajax({
-      url: url,
-      dataType: 'JSONP',
-      error: function(error){
-        console.log("Error:", error);
-        this.refs.searchInput.getDOMNode().value = "";
-      }.bind(this),
-        success: function(data){
-        this.props.cb(data.results)
-        this.refs.searchInput.getDOMNode().value = "";
-    }.bind(this)
-  })
-}
-```
+* Make a method called ```handleSubmit``` which will get the formatted URL from the ```formatURL``` method then it will make a ```JSONP``` ajax request to the specified URL. On success, invoke the ```cb``` method on the ```props``` object passing it the ```results``` array you got from the iTunes response object. Also, to make it feel nice, add in a reset for the ```searchInput``` ref.
 
 ####Step 3: App Component
 Let's now shift focus to the ```App.js``` file. This component will be where be our main wrapper for our ```SearchItunes``` component but it will also be where our ```Griddle``` grid gets rendered. 
@@ -79,25 +49,8 @@ Let's now shift focus to the ```App.js``` file. This component will be where be 
 Next head down to the ```render``` method. Take note of the ```griddleMeta``` array. It's full of objects which define certain columns in our Grid. "columnName" corresponds with a property that exists on the iTunes response object. "displayName" will be what the column title says. And customComponent is a way for us to specify what we'd like the rendered HTML of that certain component to look like. Notice in the example that for "Artwork" we're rendering an image and for "Online Link" we're rendering a link. We're able to do that because of this customComponent property.
 
 * Create an ```ImageComponent``` at the top of this file which will render an image with the "src" being the data prop which will be passed to the component.
-* Create an ```UrlComponent```, also at the to of this file, which will render an anchor(link) tag whose href points to the data property on the props object and that displays ```this.props.rowData.trackName```
-They'll look something like this
-```javascript
-var ImageComponent = React.createClass({
-    render: function(){
-        return (
-          <img src={this.props.data} />
-        )
-    }
-});
+* Create an ```UrlComponent```, also at the to of this file, which will render an anchor(link) tag whose href points to the data property on the props object and that displays ```this.props.rowData.trackName```.
 
-var UrlComponent = React.createClass({
-    render: function(){
-        return (
-          <a href={this.props.data}>{this.props.rowData.trackName}></a>
-        )
-    }
-});
-```
 For more guidance on the customComponent part of our Griddle component, check out the Griddle docs [HERE](http://dynamictyped.github.io/Griddle/customization.html#customColumns)
 
 Last step is finishing the render method. Check out the instructions inside the file itself. 
@@ -108,15 +61,8 @@ For Griddle, here are the instructions.
     - tableClassName: give this the class of "table" to apply some extra CSS.
     - columnMetadata: This is going to be the array of objects we built earlier inside the render and it's just some more config stuff for our component
     - columns: An array of the columns for our Grid. "trackName", "artistName", etc.
-  You'll end up with something like this.
-  ```html
-  <Griddle
-    results={this.state.data}
-    tableClassName="table"
-    columnMetadata={griddleMeta}
-    columns={["trackName", "artistName", "primaryGenreName", "artworkUrl100", "trackPrice", "kind", "trackViewUrl"]}
-  />
-  ```
+
+Check out the Griddle docs if you get stuck on this. Try to do as much on your own as you can without looking at the code from the solution branch.
   
 That's it! If you finish early, you have a few options.
   - If you've never used Firebase, go and check it out. We'll cover it tomorrow morning but it's good to get a head start on it. [Firebase](https://www.firebase.com/)
