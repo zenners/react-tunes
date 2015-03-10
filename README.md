@@ -15,14 +15,12 @@ And here's one with the component layers highlighted.
 ###Step 1: Familiarize yourself with Code
 Notice, like the last project, you're given a boilerplate of code to start with. There are two files in ```app/```, ```App.js``` and ```SearchItunes```. The ```App``` component is going to be responsible for keeping track of the data from iTunes and displaying that data nicely to the screen. The ```SearchItunes``` component is going to be be a bootstrapped wrapped input and select field which will go and fetch some data from iTunes. *Because this project is very bootstrappy, feel free to roll your own CSS if you'd like. I use Bootstrap for these examples as a way to quickly demonstrate the principles behind React without too much CSS getting in the way*.
 
-One component we're going to use that is already built for us is a component called [Griddle](http://dynamictyped.github.io/Griddle/). Griddle is a simple grid component for use with React. It gives us a very convenient way to display some piece of data (in this case iTunes data) in a grid/table like manner. 
+One component we're going to use that is already built for us is called [Griddle](http://dynamictyped.github.io/Griddle/). Griddle is a simple grid component for use with React. It gives us a very convenient way to display some piece of data (in this case iTunes data) in a grid/table like manner. 
 
 * Run ```npm install``` in your terminal to install all of the dependencies that are located in the package.json, Griddler is one of these dependencies. 
 
 ###Step 2: Search iTunes Component
-* Head over to your SearchItunes.js file and set the initial state of your component to be a property of ```entity``` whose value is ```musicTrack```. 
-
-The ```entity``` state is going to be tied to our Select field and will be the type of iTunes data the user wants to fetch (Music or Movies) and will also get tacked on to our URL of the request we make to iTunes.
+This component won't need an initial state. We'll be using the refs object available to us to pull in all the user input that we need.
 
 * Validate that your component is receiving a ```cb``` prop and that it's a function.
 
@@ -36,33 +34,24 @@ Input Field
 ```
 
 * Now make your select element. Then inside your select add two options with the values of ```musicTrack``` and ```movie```.
-* Create a ```handleSelectChange``` method that will now be linked to the ```onChange``` property on the select element in your render. Have the ```handleSelectChange``` method update the ```entity``` state with the value from your select.
+* Add a ref onto your select element as well to give us access to what option has been selected. Call it ```selectInput```.
 
 
 Select box
 ```html
- <select className="form-control" onChange={this.handleSelectChange}>
+ <select className="form-control" ref="selectInput">
    <option value="musicTrack">Music</option>
    <option value="movie">Movies</option>
  </select>
 ```
 
-Handle change method
-```javascript
-handleSelectChange: function(e){
-  this.setState({
-    entity: e.target.value
-  })
-},
-```
-
 * Next what we're going to need to do is create a helper method that will return us a URL which we'll then use to make the Ajax request to iTunes.
 
-* Create a formatURL method which will return a URL that eventually looks like this, *https://itunes.apple.com/search?term=shakira&entity=musicTrack* replacing "shakira" with the ```search``` state and replacing ```musicTrack``` with the entity state.
+* Create a formatURL method which will return a URL that eventually looks like this, *https://itunes.apple.com/search?term=shakira&entity=musicTrack* replacing "shakira" with the ```searchInput``` ref and replacing "musicTrack" with the ```selectInput``` ref.
 
 The last method we need to make is our handleSubmit method. This method will be tied to a button in our render method and will make the ```JSONP``` ajax request to the iTunes API to fetch some data. *If you're not familar with JSONP, here's a great Stack Overflow post on the subject. [JSONP Explained](http://stackoverflow.com/questions/2067472/what-is-jsonp-all-about)
 
-* Make a method called ```handleSubmit``` which will get the formatted URL from the ```formatURL``` method then it will make a ```JSONP``` ajax request to the specified URL. On success, invoke the ```cb``` method on the ```props``` object passing it the ```results``` array you got from the iTunes response object. 
+* Make a method called ```handleSubmit``` which will get the formatted URL from the ```formatURL``` method then it will make a ```JSONP``` ajax request to the specified URL. On success, invoke the ```cb``` method on the ```props``` object passing it the ```results``` array you got from the iTunes response object. Then add in a ref reset for our ```searchInput``` ref.
 ```javascript
 handleSubmit: function(){
   var url = this.formatUrl();
@@ -70,10 +59,12 @@ handleSubmit: function(){
       url: url,
       dataType: 'JSONP',
       error: function(error){
-        console.log("Error:", error)
-      },
-      success: function(data){
-      this.props.cb(data.results)
+        console.log("Error:", error);
+        this.refs.searchInput.getDOMNode().value = "";
+      }.bind(this),
+        success: function(data){
+        this.props.cb(data.results)
+        this.refs.searchInput.getDOMNode().value = "";
     }.bind(this)
   })
 }
