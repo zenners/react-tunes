@@ -41,7 +41,7 @@ The last method we need to make is our handleSubmit method. This method will be 
 * Make a method called ```handleSubmit``` which will get the formatted URL from the ```formatURL``` method then it will make a ```JSONP``` ajax request to the specified URL. On success, invoke the ```cb``` method on the ```props``` object passing it the ```results``` array you got from the iTunes response object. Also, to make it feel nice, add in a reset for the ```searchInput``` ref.
 
 ####Step 3: App Component
-Let's now shift focus to the ```App.js``` file. This component will be where be our main wrapper for our ```SearchItunes``` component but it will also be where our ```Griddle``` grid gets rendered. 
+Let's now shift focus to the ```App.js``` file. This component will be our main wrapper for our ```SearchItunes``` component but it will also be where our ```Griddle``` grid gets rendered. 
 
 * Set the initial state of this component to be a property of ```data``` whose value is an empty string. This will eventually be the data we get back from our ```SearchItunes``` component.
 * Create an ```updateState``` method which takes in an ```info``` parameter and sets the ```data``` state to that ```info``` parameter. This is what we'll pass the ```SearchItunes``` component as its ```cb``` prop. It will be invoked when the iTunes data is ready in the ```SearchItunes``` component.
